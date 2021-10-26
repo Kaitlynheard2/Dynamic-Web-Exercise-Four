@@ -1,0 +1,6 @@
+#Node_modeules holds the dependencies for this applicaiton
+/node_modules
+#Environmental variable file: will not want API keys on a repo
+.env
+#misc
+.DS_Store

@@ -1,9 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send(`<h1>Individual Post</h1>
-    <p>A single post will go here...</p>`);
-});
+const firestore = require("firebase/firestore");
 
+const db = firestore.getFirestore();
+
+//accessible at /article/:id
+router.get("/:id", (req, res) => {
+  const postId = req.params.id;
+  const blogpost = firestore.getDoc(firestore.doc(db, "blogposts", postId));
+  blogpost
+    .then((response) => {
+      const post = response.data();
+      if (post) return res.send(post);
+      return res.send(`no doc...... sorry`);
+    })
+    .catch((error) => {
+      res.send("No doc... sorry");
+    });
+});
+router.get("/", (req, res) => {
+  res.send("Please include an ID");
+});
 module.exports = router;

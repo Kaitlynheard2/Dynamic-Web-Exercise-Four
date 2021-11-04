@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 const port = process.env.PORT || 4000;
-const firebase = require("firrebase/app");
+const firebase = require("firebase/app");
 
 const firebaseConfig = {
   apiKey: "AIzaSyBxm6_253NWqCgZ87rQjz_z2u2PlvZPN5w",
@@ -14,7 +14,7 @@ const firebaseConfig = {
   measurementId: "G-3XYCYQHVYV",
 };
 
-const app = inititializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 const indexRoute = require("./routers/index");
 const articleRoute = require("./routers/article");

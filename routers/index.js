@@ -1,16 +1,25 @@
+const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 
-const firebase = require("firebase/firestore/lite");
-const db = firebase.firestore();
-const blogposts = db.collection("blogposts");
+const firestore = require("firebase/firestore");
+const db = firestore.getFirestore();
 
 router.get("/", (req, res) => {
-  //create empty array
+  const blogposts = firestore.getDocs(firestore.collection(db, "blogposts"));
   const blogpostsArray = [];
-  //Get blogposts JSON from Firebase
-  //Push document form blogposts into blogposts array...
-  res.send([]);
+
+  blogposts
+    .then((response) => {
+      response.forEach((doc) => {
+        blogpostsArray.push(doc.data());
+      });
+      return res.send(blogpostsArray);
+    })
+    .catch(function (error) {
+      console.log("Error", error);
+      return res.send(error);
+    });
 });
 
 module.exports = router;
